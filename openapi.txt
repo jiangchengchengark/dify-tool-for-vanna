@@ -1,0 +1,175 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Database Connector API",
+    "description": "API for connecting to and interacting with databases.",
+    "version": "v1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://xx.x.x.xxx:5600（替换成局域网中主机的地址）",
+      "description": "Development server"
+    }
+  ],
+  "paths": {
+    "/connect": {
+      "post": {
+        "summary": "Connect to a database",
+        "description": "Connects to a specified database and returns an instance ID.",
+        "operationId": "connectToDatabase",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "sql_name": {
+                    "type": "string",
+                    "description": "Type of the database (e.g., 'mysql', 'sqlite', 'snowflake')."
+                  },
+                  "host": {
+                    "type": "string",
+                    "description": "Host address of the database."
+                  },
+                  "dbname": {
+                    "type": "string",
+                    "description": "Name of the database."
+                  },
+                  "user": {
+                    "type": "string",
+                    "description": "Username for database authentication."
+                  },
+                  "password": {
+                    "type": "string",
+                    "description": "Password for database authentication."
+                  },
+                  "port": {
+                    "type": "integer",
+                    "description": "Port number for the database connection."
+                  },
+                  "role": {
+                    "type": "string",
+                    "description": "Role for the database connection (if applicable)."
+                  }
+                },
+                "required": ["sql_name", "host", "dbname"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully connected to the database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "instance_id": {
+                      "type": "string",
+                      "description": "Unique identifier for the database instance."
+                    },
+                    "port": {
+                      "type": "integer",
+                      "description": "Port number for the web server."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid request parameters."
+          }
+        }
+      }
+    },
+    "/get_sql_code": {
+      "post": {
+        "summary": "Generate SQL code",
+        "description": "Generates SQL code based on a given question.",
+        "operationId": "generateSQLCode",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "description": "Question to generate SQL code for."
+                  },
+                  "instance_id": {
+                    "type": "string",
+                    "description": "Unique identifier for the database instance."
+                  }
+                },
+                "required": ["question", "instance_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully generated SQL code.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Instance not found."
+          }
+        }
+      }
+    },
+    "/get_answer": {
+      "post": {
+        "summary": "Get answer from database",
+        "description": "Retrieves an answer from the database based on a given question.",
+        "operationId": "getAnswer",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "question": {
+                    "type": "string",
+                    "description": "Question to get an answer for."
+                  },
+                  "instance_id": {
+                    "type": "string",
+                    "description": "Unique identifier for the database instance."
+                  }
+                },
+                "required": ["question", "instance_id"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved answer from the database.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Instance not found."
+          }
+        }
+      }
+    }
+  }
+}
