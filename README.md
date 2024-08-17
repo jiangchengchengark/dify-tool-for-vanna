@@ -1,14 +1,4 @@
-# Local Vanna for DIY
 
-## 简介
-
-Local Vanna for DIY
-
-# Question
-
-项目名为local vanna for dify
-
-# Answer
 
 # Local Vanna for Dify
 
