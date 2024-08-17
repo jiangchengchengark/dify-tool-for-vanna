@@ -59,6 +59,8 @@ Local Vanna for Dify 是一个基于 Vanna 框架的 API，用于连接和交互
 
    ```bash
    flask run
+   or
+   python api.py
    ```
 
    默认情况下，应用会在 `http://127.0.0.1:5600` 上运行。
@@ -67,7 +69,7 @@ Local Vanna for Dify 是一个基于 Vanna 框架的 API，用于连接和交互
 
 1. **配置 Dify**
 
-   在 Dify 平台上，创建一个新的自定义工具，并配置 API 地址为 `http://127.0.0.1:5600`。
+   在 Dify 平台上，创建一个新的自定义工具，并将openapi文件中的url地址改为 `http://127.0.0.1:5600`，或者你部署dify的主机地址
 
 2. **导入 OpenAPI 规范**
 
