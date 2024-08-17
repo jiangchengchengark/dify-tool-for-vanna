@@ -28,7 +28,7 @@ Local Vanna for Dify 是一个基于 Vanna 框架的 API，用于连接和交互
 1. **克隆仓库**
 
    ```bash
-   git clone https://github.com/yourusername/local-vanna-for-dify.git
+   git clone https://github.com/jiangchengchenggark/dify-tool-for-vanna.git
    cd local-vanna-for-dify
    ```
 
@@ -37,6 +37,7 @@ Local Vanna for Dify 是一个基于 Vanna 框架的 API，用于连接和交互
    ```bash
    python -m venv venv
    source venv/bin/activate  # 在 Windows 上使用 `venv\Scripts\activate`
+   conda create -n vanna python==3.10
    ```
 
 3. **安装依赖**
@@ -60,13 +61,13 @@ Local Vanna for Dify 是一个基于 Vanna 框架的 API，用于连接和交互
    flask run
    ```
 
-   默认情况下，应用会在 `http://127.0.0.1:5000` 上运行。
+   默认情况下，应用会在 `http://127.0.0.1:5600` 上运行。
 
 ### 与 Dify 集成
 
 1. **配置 Dify**
 
-   在 Dify 平台上，创建一个新的自定义工具，并配置 API 地址为 `http://127.0.0.1:5000`。
+   在 Dify 平台上，创建一个新的自定义工具，并配置 API 地址为 `http://127.0.0.1:5600`。
 
 2. **导入 OpenAPI 规范**
 
