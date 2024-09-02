@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>配置 MySQL 数据库</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            color: #333;
+        }
+        input[type="text"], input[type="password"], input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .security-notice {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        .security-notice p {
+            margin: 0;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>配置 MySQL 数据库</h1>
+        <div class="security-notice">
+            <p>我们重视您的数据安全，所有数据库信息均本地储存，不会上传至LLM服务器。请放心使用。</p>
+        </div>
+        <form action="/generate" method="post">
+            <label for="host">主机地址:</label>
+            <input type="text" id="host" name="host" required>
+            <label for="dbname">数据库名称:</label>
+            <input type="text" id="dbname" name="dbname" required>
+            <label for="user">用户名:</label>
+            <input type="text" id="user" name="user" required>
+            <label for="password">密码:</label>
+            <input type="password" id="password" name="password" required>
+            <label for="port">端口:</label>
+            <input type="number" id="port" name="port" value="3306" required>
+            <input type="submit" value="生成配置">
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时训平台</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 600px;
+            text-align: center;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .container .tab {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+        .container .tab button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+        .container .tab button.active {
+            background-color: #0056b3;
+        }
+        .container .tab-content {
+            display: none;
+        }
+        .container .tab-content.active {
+            display: block;
+        }
+        .container input[type="file"],
+        .container textarea,
+        .container input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .container textarea {
+            height: 100px;
+            resize: none;
+        }
+        .container button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .container button:hover {
+            background-color: #0056b3;
+        }
+        .pre-training-status {
+            margin-bottom: 20px;
+        }
+        .disabled {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+        .log-area {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+            height: 200px;
+            overflow-y: scroll;
+            background-color: #f9f9f9;
+        }
+    </style>
+    <script>
+        var local_adress = '{{ local_adress }}'; // 确保 local_adress 在前端可用
+
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        function fetchLogs() {
+            setInterval(() => {
+                fetch('/get_pre_training_log')
+                .then(response => response.json())
+                .then(data => {
+                    var logArea = document.getElementById('log-area');
+                    logArea.innerHTML = '';
+                    
+                    data.log.forEach(log => {
+                        var p = document.createElement('p');
+                        p.innerText = log;
+                        logArea.appendChild(p);
+                    });
+                    logArea.scrollTop = logArea.scrollHeight;
+                });
+
+            }, 2000); // 每5秒刷新一次日志
+        }
+        window.onload = function() {
+            fetchLogs();  // 初始加载日志
+        };
+           
+        function trainDocumentation() {
+            var formData = new FormData(document.querySelector('#Documentation form'));
+            fetch('/train_documentation', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.status === 'success') {
+                    pass;
+                  } else {
+                      alert(data.message);
+                  }
+              });
+        }
+
+        function trainSQL() {
+            var sqlList = document.querySelector('#SQL textarea').value;
+            fetch('/train_sql', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ sql_list: sqlList.split('\n') })
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.status === 'success') {
+                    pass;
+                  } else {
+                      alert(data.message);
+                  }
+              });
+        }
+
+        function trainSQLQuestion() {
+            var formData = new FormData(document.querySelector('#SQLQuestion form'));
+            fetch('/train_sql_question', {
+                method: 'POST',
+                body: formData
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.status === 'success') {
+                    pass;
+                  } else {
+                      alert(data.message);
+                  }
+              });
+        }
+
+        function inference() {
+            var question = document.querySelector('#Inference input').value;
+            fetch('/inference', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ question: question })
+            }).then(response => response.json())
+              .then(data => {
+                  if (data.status === 'success') {
+                      alert('推理结果: ' + data.result);
+                  } else {
+                      alert(data.message);
+                  }
+              });
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>时训平台</h1>
+        <div class="pre-training-status" id="pre-training-status"></div>
+        <div class="log-area" id="log-area" ></div>
+        <div class="tab">
+            <button class="tablinks active" onclick="openTab(event, 'Documentation')">文档训练</button>
+            <button class="tablinks" onclick="openTab(event, 'SQL')">SQL训练</button>
+            <button class="tablinks" onclick="openTab(event, 'SQLQuestion')">SQL问题训练</button>
+            <button class="tablinks" onclick="openTab(event, 'Inference')">推理</button>
+        </div>
+        <div id="Documentation" class="tab-content active">
+            <h2>文档训练</h2>
+            <p>请使用txt、docx、doc格式文件</p>
+            <form action="/train_documentation" method="post" enctype="multipart/form-data" onsubmit="return false;">
+                <input type="file" name="file" required>
+                <button type="submit" onclick="trainDocumentation()">开始训练</button>
+            </form>
+        </div>
+        <div id="SQL" class="tab-content">
+            <h2>SQL训练</h2>
+            <p>请输入SQL语句，每行一条</p>
+            <form action="/train_sql" method="post" onsubmit="return false;">
+                <textarea name="sql_list" placeholder="输入SQL语句，每行一条" required></textarea>
+                <button type="submit" onclick="trainSQL()">开始训练</button>
+            </form>
+        </div>
+        <div id="SQLQuestion" class="tab-content">
+            <h2>SQL问题训练</h2>
+            <p>请上传SQL问题文件，文件格式为excel</p>
+            <form action="/train_sql_question" method="post" enctype="multipart/form-data" onsubmit="return false;">
+                <input type="file" name="file" required>
+                <button type="submit" onclick="trainSQLQuestion()">开始训练</button>
+            </form>
+        </div>
+        <div id="Inference" class="tab-content">
+            <h2>测试</h2>
+            <form action="/inference" method="post" onsubmit="return false;">
+                <input type="text" name="question" placeholder="输入问题" required>
+                <button type="submit" onclick="inference()">开始测试</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

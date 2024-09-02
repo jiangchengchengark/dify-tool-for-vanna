@@ -1,0 +1,44 @@
+{
+    "zhipu": {
+        "config": {
+            "api_key": "your api key",
+            "model":"glm-4-flash",
+            "timeout": 30
+        },
+        "vsconfig":{
+            "api_key": "your api key",
+            "model":"embedding-2",
+            "timeout": 30
+        }
+    },
+    "qianfan": {
+        "config": {
+            "api_key": "ANOTHER_API_KEY",
+            "secret_key": "YOUR_SECRET_KEY",
+            "model":"your selected model",
+            "timeout": 25
+        },
+        "vsconfig":{
+            "api_key": "ANOTHER_API_KEY",
+            "secret_key": "YOUR_SECRET_KEY",
+            "model":"your embedding model",
+            "timeout": 25
+        }
+    },
+    "vllm":{
+        "config": {
+            "auth-key": "YOUR_API_KEY",
+            "timeout": 30,
+            "vllm_host":"http://localhost:8080",
+            "model":"your selected model"
+        }
+    },
+    "ollama":{
+
+        "config": {
+            "model": "your selected model",
+            "ollama_host":"http://localhost:11434",
+            "timeout": 30
+    }
+    }
+}

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>欢迎</title>
+    <style>
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+        p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 30px;
+        }
+        select, input[type="submit"] {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .logo {
+            margin-bottom: 20px;
+        }
+        .logo img {
+            max-width: 150px;
+        }
+        .brand-slogan {
+            color: #007bff;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <img src="path/to/logo.png" alt="公司Logo">
+        </div>
+        <div class="brand-slogan">高效管理，从这里开始</div>
+        <h1>欢迎使用SQL&LLM工具</h1>
+        <p>选择您的数据库类型，开始配置您的数据管理工具。</p>
+        <form action="/select_db" method="post">
+            <select name="sql_name">
+                <option value="mysql">MySQL</option>
+                <option value="sqlite">SQLite</option>
+                <option value="snowflake">Snowflake</option>
+            </select>
+            <input type="submit" value="下一步">
+        </form>
+    </div>
+</body>
+</html>
